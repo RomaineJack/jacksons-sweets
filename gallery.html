@@ -177,7 +177,7 @@
 
     <div class="lightbox" id="lightbox">
 
-        <button class="lightbox-close" id="lightboxClose">
+        <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Close image">
             ×
         </button>
 
@@ -224,6 +224,51 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase.js"></script>
     <script src="js/main.js"></script>
+
+    <script>
+        document.addEventListener("click", function (event) {
+            const clickedImage = event.target.closest(".gallery-item img");
+            const galleryLightbox = document.getElementById("lightbox");
+            const galleryLightboxImage = document.getElementById("lightboxImage");
+
+            if (!clickedImage || !galleryLightbox || !galleryLightboxImage) {
+                return;
+            }
+
+            galleryLightboxImage.src = clickedImage.src;
+            galleryLightboxImage.alt = clickedImage.alt || "Jackson's Sweets gallery photo";
+            galleryLightbox.classList.add("active");
+            document.body.style.overflow = "hidden";
+        });
+
+        function closeGalleryLightbox() {
+            const galleryLightbox = document.getElementById("lightbox");
+
+            if (!galleryLightbox) {
+                return;
+            }
+
+            galleryLightbox.classList.remove("active");
+            document.body.style.overflow = "";
+        }
+
+        document.getElementById("lightboxClose")?.addEventListener("click", function (event) {
+            event.stopPropagation();
+            closeGalleryLightbox();
+        });
+
+        document.getElementById("lightbox")?.addEventListener("click", function (event) {
+            if (event.target === this) {
+                closeGalleryLightbox();
+            }
+        });
+
+        document.addEventListener("keydown", function (event) {
+            if (event.key === "Escape") {
+                closeGalleryLightbox();
+            }
+        });
+    </script>
 
 </body>
 </html>
