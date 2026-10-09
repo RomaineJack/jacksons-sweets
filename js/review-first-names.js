@@ -13,7 +13,12 @@ function showFirstNamesOnly(root) {
         if (!fullName) return;
 
         const firstName = fullName.split(/\s+/)[0];
-        nameElement.textContent = firstName;
+
+        // Only change the DOM when the displayed value actually needs updating.
+        // This prevents the MutationObserver from triggering itself forever.
+        if (fullName !== firstName) {
+            nameElement.textContent = firstName;
+        }
     });
 }
 
