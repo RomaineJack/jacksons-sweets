@@ -18,11 +18,6 @@ function escapeHomepageReviewHTML(value) {
         .replaceAll("'", "&#039;");
 }
 
-function getHomepageReviewFirstName(value) {
-    const fullName = String(value || "Customer").trim();
-    return fullName ? fullName.split(/\s+/)[0] : "Customer";
-}
-
 async function loadHomepageReviews() {
     if (!homepageReviewsGrid || typeof supabaseClient === "undefined") {
         return;
@@ -60,9 +55,7 @@ async function loadHomepageReviews() {
 
                 const stars = "★".repeat(rating) + "☆".repeat(5 - rating);
                 const reviewText = escapeHomepageReviewHTML(review.review_text);
-                const customerName = escapeHomepageReviewHTML(
-                    getHomepageReviewFirstName(review.customer_name)
-                );
+                const customerName = escapeHomepageReviewHTML(review.customer_name || "Customer");
 
                 return `
                     <article class="review-card">
