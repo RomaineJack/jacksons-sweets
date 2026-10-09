@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Owner Login | Jackson's Sweets</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="admin-body">
+
+    <main class="login-page">
+
+        <div class="login-card">
+
+            <a href="index.html">
+                <img
+                    src="assets/images/logo.png"
+                    alt="Jackson's Sweets"
+                    class="login-logo"
+                >
+            </a>
+
+            <p class="eyebrow">
+                Owner access
+            </p>
+
+            <h1>
+                Sign In
+            </h1>
+
+            <p class="login-intro">
+                Sign in to manage Jackson's Sweets.
+            </p>
+
+
+            <form id="loginForm">
+
+                <div class="form-group">
+
+                    <label for="loginEmail">
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="loginEmail"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="loginPassword">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="loginPassword"
+                        required
+                    >
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="button primary-button login-button"
+                >
+                    Sign In
+                </button>
+
+
+                <div
+                    class="form-message"
+                    id="loginMessage"
+                ></div>
+
+            </form>
+
+
+            <a
+                href="index.html"
+                class="back-to-site"
+            >
+                ← Back to website
+            </a>
+
+        </div>
+
+    </main>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase.js"></script>
+    <script src="js/admin.js"></script>
+
+</body>
+</html>

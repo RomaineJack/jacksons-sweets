@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Preorders | Jackson's Sweets</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="header-container">
+
+            <a href="index.html" class="logo-link">
+                <img
+                    src="assets/images/logo.png"
+                    alt="Jackson's Sweets"
+                    class="logo"
+                >
+            </a>
+
+            <button
+                class="menu-button"
+                id="menuButton"
+                type="button"
+            >
+                ☰
+            </button>
+
+            <nav
+                class="main-nav"
+                id="mainNav"
+            >
+                <a href="index.html">Home</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="order.html">Order</a>
+                <a
+                    href="preorders.html"
+                    class="active-link"
+                >
+                    Preorders
+                </a>
+                <a href="reviews.html">Reviews</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+
+        </div>
+    </header>
+
+
+    <main>
+
+        <section class="page-hero">
+
+            <div class="page-hero-content">
+
+                <p class="eyebrow">
+                    Limited-time sweets
+                </p>
+
+                <h1>
+                    Current Preorders
+                </h1>
+
+                <p>
+                    Shop limited cakesicle drops for holidays, special events
+                    and seasonal releases while spots are available.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <section class="section">
+
+            <div class="preorder-note">
+
+                <strong>
+                    How preorders work:
+                </strong>
+
+                <p>
+                    Each preorder has a deadline and pickup date. Once the
+                    preorder closes or sells out, that item may no longer be
+                    available.
+                </p>
+
+            </div>
+
+
+            <div
+                class="preorder-grid"
+                id="publicPreorderGrid"
+            >
+                <p>
+                    Loading preorders...
+                </p>
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- PREORDER MODAL -->
+
+    <div
+        class="preorder-modal"
+        id="preorderModal"
+    >
+
+        <div class="preorder-modal-card">
+
+            <button
+                class="preorder-modal-close"
+                id="preorderModalClose"
+                type="button"
+            >
+                ×
+            </button>
+
+
+            <p class="eyebrow">
+                Preorder request
+            </p>
+
+            <h2 id="preorderProductName">
+                Product
+            </h2>
+
+
+            <p class="preorder-modal-price">
+
+                <span>
+                    Price:
+                </span>
+
+                $<span id="preorderProductPrice">0</span>
+
+            </p>
+
+
+            <form id="preorderForm">
+
+                <div class="form-group">
+
+                    <label for="preorderName">
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="preorderName"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="preorderPhone">
+                        Phone Number
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="preorderPhone"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="preorderEmail">
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="preorderEmail"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="preorderQuantity">
+                        How Many Boxes?
+                    </label>
+
+                    <input
+                        type="number"
+                        id="preorderQuantity"
+                        min="1"
+                        value="1"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="preorder-total">
+
+                    <span>
+                        Estimated Total
+                    </span>
+
+                    <strong id="preorderTotal">
+                        $0
+                    </strong>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="button primary-button preorder-submit"
+                >
+                    Submit Preorder Request
+                </button>
+
+
+                <div
+                    class="form-message"
+                    id="preorderMessage"
+                ></div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <footer>
+
+        <div class="footer-container">
+
+            <div>
+
+                <h3>
+                    Jackson's Sweets
+                </h3>
+
+                <p>
+                    Custom cakesicles made for life's sweetest moments.
+                </p>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <a href="gallery.html">
+                    Gallery
+                </a>
+
+                <a href="order.html">
+                    Order
+                </a>
+
+                <a href="preorders.html">
+                    Preorders
+                </a>
+
+                <a href="reviews.html">
+                    Reviews
+                </a>
+
+                <a href="contact.html">
+                    Contact
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="copyright">
+            © 2026 Jackson's Sweets
+        </div>
+
+    </footer>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
+</html>
