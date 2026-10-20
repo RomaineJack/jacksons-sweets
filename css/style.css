@@ -3665,3 +3665,23 @@ footer {
     background: var(--purple);
     color: white;
 }
+
+/* Gallery portfolio refinements */
+.gallery-filters { gap: 10px; margin-bottom: 34px; }
+.gallery-filters .filter-button { border-radius: 999px; transition: background .2s ease, color .2s ease, border-color .2s ease; }
+.gallery-filters .filter-button:focus-visible { outline: 3px solid var(--pink); outline-offset: 3px; }
+.full-gallery-grid { gap: 24px; margin-bottom: 24px; align-items: stretch; }
+.gallery-item { border: 1px solid #f0ddea; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 25px rgba(66,25,88,.07); background: #fff; cursor: zoom-in; display: flex; flex-direction: column; }
+.gallery-item img { height: auto; aspect-ratio: 1 / 1; width: 100%; object-fit: cover; display: block; transition: transform .28s ease; }
+.gallery-item .gallery-card-body { padding: 17px 20px 20px; }
+.gallery-card-category { display: block; font-size: 11px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: var(--pink); margin-bottom: 7px; }
+.gallery-card-title { margin: 0; font-size: 18px; color: var(--dark-purple); line-height: 1.35; }
+.gallery-item:focus-visible { outline: 3px solid var(--pink); outline-offset: 3px; }
+.gallery-item.hidden { display: none; }
+.gallery-empty-note { color: var(--muted); text-align: center; margin: 15px auto 35px; }
+.gallery-experience-nav { position: absolute; top: 50%; transform: translateY(-50%); border: 1px solid rgba(255,255,255,.4); border-radius: 50%; width: 46px; height: 46px; font-size: 30px; background: rgba(20,5,30,.65); color: white; cursor: pointer; z-index: 3; }
+.gallery-experience-prev { left: 12px; }
+.gallery-experience-next { right: 12px; }
+.gallery-experience-caption { position: absolute; bottom: 12px; left: 15px; right: 15px; color: white; text-align: center; font-size: 14px; pointer-events: none; text-shadow: 0 2px 8px #000; }
+body .lightbox.gallery-experience-open img { max-height: 78vh; }
+@media(max-width:600px) { .full-gallery-grid { gap: 16px; } .gallery-item img { height: auto; aspect-ratio: 1 / 1; } .gallery-item .gallery-card-body { padding: 13px 15px 17px; } .gallery-card-title { font-size: 16px; } .gallery-experience-nav { width: 37px; height: 37px; font-size: 24px; } .gallery-experience-prev { left: 5px; } .gallery-experience-next { right: 5px; } }
