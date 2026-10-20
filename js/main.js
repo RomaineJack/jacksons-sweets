@@ -1812,147 +1812,41 @@ loadPublicPreorders();
    PUBLIC GALLERY
 ========================================================= */
 
-const publicGalleryGrid =
-    document.getElementById(
-        "publicGalleryGrid"
-    );
-
+const publicGalleryGrid = document.getElementById("publicGalleryGrid");
 
 async function loadPublicGallery() {
-
-    if (!publicGalleryGrid) {
-
-        return;
-
-    }
-
-
-    publicGalleryGrid.innerHTML =
-        "<p>Loading gallery...</p>";
-
-
+    if (!publicGalleryGrid) return;
+    publicGalleryGrid.innerHTML = "<p>Loading gallery...</p>";
     try {
-
-        const {
-            data: items,
-            error
-        } =
-            await supabaseClient
-                .from(
-                    "gallery_items"
-                )
-                .select(
-                    "*"
-                )
-                .order(
-                    "created_at",
-                    {
-                        ascending:
-                            false
-                    }
-                );
-
-
-        if (error) {
-
-            console.error(
-                error
-            );
-
-
-            publicGalleryGrid.innerHTML =
-                "<p>Unable to load gallery.</p>";
-
-
-            return;
-
+        const { data, error } = await supabaseClient.from("gallery_items")
+            .select("*").order("created_at", { ascending: false });
+        if (error) throw error;
+        const items = data || [];
+        if (!items.length) {
+            publicGalleryGrid.innerHTML = "";
+        } else {
+            const categoryLabels = { custom:"Custom Orders", events:"Events", holiday:"Holidays", flavors:"Flavors", wedding:"Weddings" };
+            publicGalleryGrid.innerHTML = items.map(item => {
+                const category = String(item.category || "").toLowerCase();
+                const safeCategory = escapePublicHTML(category);
+                const title = escapePublicHTML(item.title || "Custom Cakesicle Creation");
+                const url = escapePublicHTML(item.image_url || "");
+                const label = escapePublicHTML(categoryLabels[category] || "Our Creations");
+                return `<article class="gallery-item" data-category="${safeCategory}" role="button" tabindex="0" aria-label="View ${title}">
+                    <img src="${url}" alt="${title}" loading="lazy">
+                    <div class="gallery-card-body"><span class="gallery-card-category">${label}</span><h3 class="gallery-card-title">${title}</h3></div>
+                </article>`;
+            }).join("");
         }
-
-
-        const safeItems =
-            items || [];
-
-
-        if (
-            !safeItems.length
-        ) {
-
-            publicGalleryGrid.innerHTML = `
-                <div class="empty-dashboard-message">
-                    No gallery items are available yet.
-                </div>
-            `;
-
-
-            return;
-
-        }
-
-
-        publicGalleryGrid.innerHTML =
-            safeItems
-                .map(
-                    item => {
-
-                        const category =
-                            escapePublicHTML(
-                                item.category
-                            );
-
-
-                        const imageUrl =
-                            escapePublicHTML(
-                                item.image_url
-                            );
-
-
-                        const title =
-                            escapePublicHTML(
-                                item.title ||
-                                "Jackson's Sweets gallery item"
-                            );
-
-
-                        return `
-                            <div
-                                class="gallery-item"
-                                data-category="${category}"
-                            >
-
-                                <img
-                                    src="${imageUrl}"
-                                    alt="${title}"
-                                >
-
-                            </div>
-                        `;
-
-                    }
-                )
-                .join(
-                    ""
-                );
-
-
-        setupDynamicGallery();
-
     } catch (error) {
-
-        console.error(
-            error
-        );
-
-
-        publicGalleryGrid.innerHTML =
-            "<p>Unable to load gallery.</p>";
-
+        console.error("Gallery loading error:", error);
+        publicGalleryGrid.innerHTML = '<p>Unable to load uploaded photos right now.</p>';
+    } finally {
+        setupDynamicGallery();
     }
-
 }
 
-
 loadPublicGallery();
-
 
 
 /* =========================================================
