@@ -2202,6 +2202,15 @@ if (galleryModal) {
 
 
 
+/* Keep one featured gallery photo as the homepage hero. */
+async function clearOtherFeaturedGalleryItems(excludedId) {
+    let request = supabaseClient.from("gallery_items")
+        .update({ featured: false }).eq("featured", true);
+    if (excludedId) request = request.neq("id", excludedId);
+    const { error } = await request;
+    if (error) throw error;
+}
+
 /* =========================================================
    UPLOAD GALLERY ITEM
 ========================================================= */
@@ -2396,6 +2405,21 @@ if (galleryForm) {
                 return;
             }
 
+
+            if (featured) {
+                try {
+                    const { data: newItem, error: lookupError } = await supabaseClient
+                        .from("gallery_items").select("id")
+                        .eq("image_url", imageUrl).single();
+                    if (lookupError) throw lookupError;
+                    await clearOtherFeaturedGalleryItems(newItem.id);
+                } catch (error) {
+                    console.error("Featured image selection error:", error);
+                    galleryMessage.textContent = "Photo uploaded, but unable to change the homepage feature. Use the Feature button in the gallery.";
+                    await loadDashboardGallery();
+                    return;
+                }
+            }
 
             galleryMessage.textContent =
                 "Gallery item uploaded.";
@@ -2604,65 +2628,30 @@ async function loadDashboardGallery() {
 ========================================================= */
 
 function setupGalleryActions() {
-
-    document
-        .querySelectorAll(
-            ".gallery-feature-button"
-        )
-        .forEach(button => {
-
-            button.addEventListener(
-                "click",
-                async () => {
-
-                    const id =
-                        button.dataset.id;
-
-
-                    const featured =
-                        button.dataset.featured ===
-                        "true";
-
-
-                    const {
-                        error
-                    } =
-                        await supabaseClient
-                            .from(
-                                "gallery_items"
-                            )
-                            .update({
-                                featured:
-                                    !featured
-                            })
-                            .eq(
-                                "id",
-                                id
-                            );
-
-
-                    if (error) {
-
-                        console.error(
-                            "Gallery feature error:",
-                            error
-                        );
-
-                        alert(
-                            "Unable to update gallery item."
-                        );
-
-                        return;
-                    }
-
-
-                    await loadDashboardGallery();
-
+    document.querySelectorAll(".gallery-feature-button").forEach(button => {
+        button.addEventListener("click", async () => {
+            const id = button.dataset.id;
+            const wasFeatured = button.dataset.featured === "true";
+            button.disabled = true;
+            try {
+                if (wasFeatured) {
+                    const { error } = await supabaseClient.from("gallery_items")
+                        .update({ featured: false }).eq("id", id);
+                    if (error) throw error;
+                } else {
+                    await clearOtherFeaturedGalleryItems(id);
+                    const { error } = await supabaseClient.from("gallery_items")
+                        .update({ featured: true }).eq("id", id);
+                    if (error) throw error;
                 }
-            );
-
+                await loadDashboardGallery();
+            } catch (error) {
+                console.error("Gallery feature error:", error);
+                alert("Unable to update the featured homepage photo.");
+                button.disabled = false;
+            }
         });
-
+    });
 
 
     document
